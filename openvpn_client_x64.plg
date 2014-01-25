@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.1">
+<!ENTITY plgver "3.0.2">
 ]>
 
 <PLUGIN>
@@ -185,14 +185,14 @@ openvpn_plgver()
 {
   case "$1" in
     'local')
-      if [ -f /boot/config/plugins/openvpn_client.plg ]; then
-        VERSION=$(grep "<\!ENTITY plgver" /boot/config/plugins/openvpn_client.plg | cut -d\" -f2)
+      if [ -f /boot/config/plugins/openvpn_client_x64.plg ]; then
+        VERSION=$(grep "<\!ENTITY plgver" /boot/config/plugins/openvpn_client_x64.plg | cut -d\" -f2)
       else
         VERSION=Unknown
       fi        
     ;;
     'remote')
-      VERSION=$(wget --no-check-certificate -q https://raw.github.com/petersm1/OpenVPN-Client/master/openvpn_client.plg -O - | grep "<\!ENTITY plgver" | cut -d\" -f2)
+      VERSION=$(wget --no-check-certificate -q https://raw.github.com/petersm1/openvpn_client_x64/master/openvpn_client_x64.plg -O - | grep "<\!ENTITY plgver" | cut -d\" -f2)
     ;;
   esac
   echo -n "$VERSION"
@@ -487,19 +487,19 @@ extended_running() {
 openvpn_updateplg() {
 
  cd /boot/config/plugins
-	[ -f openvpn_client.plg.old ] && rm -f openvpn_client.plg.old
+	[ -f openvpn_client_x64.plg.old ] && rm -f openvpn_client_x64.plg.old
 
 	    openvpn_stop;
 	    
-	 if [ -f openvpn_client.plg ]; then
-			mv openvpn_client.plg openvpn_client.plg.old
+	 if [ -f openvpn_client_x64.plg ]; then
+			mv openvpn_client_x64.plg openvpn_client_x64.plg.old
 			echo "Updating plugin"
-			wget -q --no-check-certificate https://github.com/petersm1/OpenVPN-Client/raw/master/openvpn_client.plg
-			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client.plg
+			wget -q --no-check-certificate https://github.com/petersm1/openvpn_client_x64/raw/master/openvpn_client_x64.plg
+			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client_x64.plg
 	  else
 			echo "Updating plugin"
-			wget -q --no-check-certificate https://github.com/petersm1/OpenVPN-Client/raw/master/openvpn_client.plg
-			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client.plg
+			wget -q --no-check-certificate https://github.com/petersm1//openvpn_client_x64/raw/master/openvpn_client_x64.plg
+			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client_x64.plg
 			#openvpn_start;
 	fi
 }
@@ -507,11 +507,11 @@ openvpn_updateplg() {
 openvpn_downgradeplg() {
 
 	cd /boot/config/plugins
-		if [ -f openvpn_client.plg.old ]; then
-			rm -f /openvpn_client.plg
-			mv openvpn_client.plg.old openvpn_client.plg
+		if [ -f openvpn_client_x64.plg.old ]; then
+			rm -f /openvpn_client_x64.plg
+			mv openvpn_client_x64.plg.old openvpn_client_x64.plg
 			echo "downgrading plugin"
-			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client.plg
+			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client_x64.plg
 	fi
 }
 
@@ -668,7 +668,7 @@ $runningpid = shell_exec("/etc/rc.d/rc.openvpn status");
 $extend_vpn_ip = shell_exec("/etc/rc.d/rc.openvpn extended_IP");
 $dev_tun = shell_exec("/etc/rc.d/rc.openvpn extended_device");
 $check_netstat = shell_exec("ip route show");
-$openvpn_rollback = file_exists( "boot/config/plugins/openvpn_client.plg.old" ) ? "yes" : "no";
+$openvpn_rollback = file_exists( "boot/config/plugins/openvpn_client_x64.plg.old" ) ? "yes" : "no";
 $openvpn_localplg = shell_exec("/etc/rc.d/rc.openvpn getver local");
 $openvpn_remoteplg = shell_exec("/etc/rc.d/rc.openvpn getver remote");
 $updates_exist = "false";
