@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.3">
+<!ENTITY plgver "3.0.4">
 ]>
 
 <PLUGIN>
@@ -10,12 +10,6 @@
 2012-06-20 - Initial Release
 OpenVPN Client version 3 x64
 -->
-
-
-<FILE Name="/boot/packages/libidn-1.25-x86_64-2.txz" Run="upgradepkg --install-new">
-<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/l/libidn-1.25-x86_64-2.txz</URL>
-<MD5>d3e815ed032f3f58adab842daa0d6a17</MD5>
-</FILE>
 
 <FILE Name="/boot/packages/lzo-2.03-x86_64-1.txz" Run="upgradepkg --install-new">
 <URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/l/lzo-2.03-x86_64-1.txz</URL>
@@ -226,50 +220,57 @@ if [ $alive = "no" ]; then
   
   sleep 0.5
   openvpn_write_startfile
-  sleep 0.5  	 	
+ # sleep 0.5  	 	
 
   echo "Starting Openvpn Tunnel: Please Wait..."
   rm -f /tmp/openvpn/openvpn.out.error 
   nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out /dev/null &
+#  nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out 2>&1 &
 
   sleep 12
+
            
  #######Check if this call is necasary############## extended_device
 
    # test if we have a connection
   dev_tun=$(extended_device)
 
-			CONNECTED="`ifconfig -a | grep -A 6 $dev_tun`"
+	CONNECTED="`ifconfig -a | grep -A 6 $dev_tun`"
 
-		  if [ "$CONNECTED" != "" ]; then
-				echo "Connected successfully on"  $dev_tun  
-				vpn_myip="`/tmp/openvpn/check-my-ip.sh`"
-			  sleep 0.5
-			  echo "Logging in to VPN was successful"		         
+		if [ "$CONNECTED" != "" ]; then
+		   echo "Connected successfully on"  $dev_tun  
+		   vpn_myip="`/tmp/openvpn/check-my-ip.sh`"
+		   sleep 0.5
+		   echo "Logging in to VPN was successful"		         
 			
-			    if [ $PLG_EXT == "Bypass" ]; then
-						echo "Starting bypass IP addresses..."
-						bypasse_IP
-		      fi
+		if [ $PLG_EXT == "Bypass" ]; then
+			echo "Starting bypass IP addresses..."
+			bypasse_IP
+	        fi
 		 
-		      if [ $PLG_EXT == "Specific" ]; then
-						echo "Starting extended routing..."
-						extended_route
-					fi
-		 else
-		  			echo "Not connected! " $dev_tun " not established!!!"
-		   			sleep 0.5
-		   			rm -f /var/run/openvpn/openvpn.pid
-		 		    cp /tmp/openvpn/openvpn.out /tmp/openvpn/openvpn.out.error 
+		if [ $PLG_EXT == "Specific" ]; then
+			echo "Starting extended routing..."
+			extended_route
+		fi
+		else
+			echo "Not connected! " $dev_tun " not established!!!"
+		   	sleep 0.5
+		   	rm -f /var/run/openvpn/openvpn.pid
+		 	cp /tmp/openvpn/openvpn.out /tmp/openvpn/openvpn.out.error 
 		 fi
 		
-		  	sleep 2
-		  	#openvpn_status
-				echo "OK... Started" 
+	sleep 2
+	#openvpn_status
+	echo "OK... Started" 
   else
-    		echo "Server already started"
+   echo "Server already started"
 fi
 
+### this is do remove defunct process, don't know why it's left, this is a dirty solution, need to find the real cause!!!! 
+	sleep 1
+	ps -ef | grep rc.openvpn | awk '{print $3}' | xargs kill
+	sleep 1
+##******************************END ***************************************************
 }
 
 openvpn_stop() {
@@ -277,8 +278,8 @@ alive=$(check_alive)
 
 if [ $alive = "yes" ]; then
 
- 	echo "Stoping Openvpn Tunnel....."
-  sleep 1
+ echo "Stoping Openvpn Tunnel....."
+ sleep 1
      
 	#	kill -9 $(cat /var/run/openvpn/openvpn.pid )
 		#kill $(cat /var/run/openvpn/openvpn.pid)
@@ -345,12 +346,12 @@ echo "Changing to the folder where the openvpn config files belong"
 openvpnpath=${OVPNCHOOSE%/*}
 
 echo $openvpnpath
-
 echo "cd $openvpnpath" > /tmp/openvpn/openclient.sh
 
-#     echo "cd /boot/openvpn" > /tmp/openvpn/openclient.sh
-     echo "sudo openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" 2>&1 &" >> /tmp/openvpn/openclient.sh
-     chmod 777 /tmp/openvpn/openclient.sh
+#     echo "sudo openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" 2>&1 &" >> /tmp/openvpn/openclient.sh
+      echo "openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" 2>&1 &" >> /tmp/openvpn/openclient.sh
+      chmod 777 /tmp/openvpn/openclient.sh
+      sleep 1
 }
 
 	
@@ -498,7 +499,7 @@ openvpn_updateplg() {
 			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client_x64.plg
 	  else
 			echo "Updating plugin"
-			wget -q --no-check-certificate https://github.com/petersm1//openvpn_client_x64/raw/master/openvpn_client_x64.plg
+			wget -q --no-check-certificate https://github.com/petersm1/openvpn_client_x64/raw/master/openvpn_client_x64.plg
 			/usr/local/sbin/installplg /boot/config/plugins/openvpn_client_x64.plg
 			#openvpn_start;
 	fi
