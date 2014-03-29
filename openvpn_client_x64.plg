@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.5">
+<!ENTITY plgver "3.0.6">
 ]>
 
 <PLUGIN>
@@ -176,40 +176,20 @@ if [ $alive = "no" ]; then
   
   sleep 0.5
  
-#######3
-#  openvpn_write_startfile
-#  
 echo "Changing to the folder where the openvpn config files belong"
-#openvpnpath=${OVPNCHOOSE%/*}
 openvpnpath=${OVPNCHOOSE%/*}
 
 cd $openvpnpath
 
 echo $openvpnpath
   
-  
-  CMDLINE="openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /dev/null 2>&1"
+   CMDLINE="openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /dev/null 2>&1"
 
-  # start process with/without logging based on config flag
-#  if [ $LOGGING != "enable" ]; then
-    #start without logging
-    nohup $CMDLINE > /dev/null 2>&1 &
-	echo $CMDLINE	
-#  else
-    #start with logging
-#    nohup $CMDLINE > /var/log/plugins/airvideo.out 2>&1 &
-#  fi
-  
-  
-  
-  
- # sleep 0.5  	 	
+   nohup $CMDLINE > /dev/null 2>&1 &
+   echo $CMDLINE	
 
   echo "Starting Openvpn Tunnel: Please Wait..."
   rm -f /tmp/openvpn/openvpn.out.error 
-###################333  nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out 2>&1 &
-#  nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out 2>&1 &
-
   sleep 12
 
            
