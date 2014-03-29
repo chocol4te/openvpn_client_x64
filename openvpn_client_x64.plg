@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.4">
+<!ENTITY plgver "3.0.5">
 ]>
 
 <PLUGIN>
@@ -55,34 +55,14 @@ rm -rf /dev/net
 mkdir /dev/net
 mknod /dev/net/tun c 10 200
 
+mkdir /tmp/openvpn
+mkdir /var/run/openvpn
 
 rm /tmp/openvpn-cleanup
 ]]>
 </INLINE>
 </FILE>
 
-<FILE Name="/tmp/openvpn/check-my-ip.sh" Mode="0770">
-<INLINE>
-<![CDATA[
-# Check my IP script
-#!/bin/bash
-]]>
-#curl -s http://my-ip-address.com/  | grep "Your IP is"
-#curl -s  http://myip.dk/  | grep "IP Address:"
-#curl -s http://checkmyip.org/ | grep "Your IP address"
-#curl -s http://www.whereisip.net/ | grep "Locating IP Address"
-#curl ifconfig.me/ip
-#curl icanhazip.com
-#curl http://ipecho.net/plain
-#wget -qO- http://ipecho.net/plain
-#wget http://www.ipchicken.com -O - -o /dev/null | grep -A 1 0000FF|grep br|awk '{print $1}'
-#curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+'
-#wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'
-#curl -s https://www.privateinternetaccess.com/pages/hide-my-ip/  | grep "IP Address:" | grep -Eo '[0-9\.]+'
-#curl -s http://geoip.hidemyass.com/ip/
-
-</INLINE>
-</FILE>
 
 <FILE Name="/boot/config/plugins/openvpn/openvpn.cfg">
 <INLINE>
@@ -105,30 +85,6 @@ OVPNCHOOSE=Chose a file
 </INLINE>
 </FILE>
 
-<FILE Name="/tmp/openvpn/check-my-host.sh" Mode="0770">
-<INLINE>
-<![CDATA[
-# Check my HOST script
-#!/bin/bash
-]]>
-#curl -s http://geoip.hidemyass.com | grep -A 1 "ISP:"
-#curl ifconfig.me/host
-#wget http://www.ipchicken.com -O - -o /dev/null | grep -A 1 Address|grep br|awk '{print $1}'
-#removed below, since the GUI can hang when waiting to complete below command
-#wget http://snoopmyip.com/ -O - -o /dev/null | grep -A 1 "My Hostname:"|grep ":"|awk '{print $3}'
-
-</INLINE>
-</FILE>
-
-<FILE Name="/tmp/openvpn/check-my-country.sh" Mode="0770">
-<INLINE>
-<![CDATA[
-# Check my Country script
-#!/bin/bash
-]]>
-curl -s 'http://geoip.hidemyass.com' | grep -o 'http://aws.hidemyass.com/flags_iso/*/[^"]*.png' | sed -n 2p
-</INLINE>
-</FILE>
 
 ############################################
 # rc.openvpn file
@@ -136,7 +92,7 @@ curl -s 'http://geoip.hidemyass.com' | grep -o 'http://aws.hidemyass.com/flags_i
 <FILE Name="/etc/rc.d/rc.openvpn" Mode="0770">
 <INLINE>
 <![CDATA[
-#!/bin/sh
+#!/bin/bash
 
 openvpn_updatecfg()
 {
@@ -219,12 +175,39 @@ if [ $alive = "no" ]; then
 	  fi
   
   sleep 0.5
-  openvpn_write_startfile
+ 
+#######3
+#  openvpn_write_startfile
+#  
+echo "Changing to the folder where the openvpn config files belong"
+#openvpnpath=${OVPNCHOOSE%/*}
+openvpnpath=${OVPNCHOOSE%/*}
+
+cd $openvpnpath
+
+echo $openvpnpath
+  
+  
+  CMDLINE="openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /dev/null 2>&1"
+
+  # start process with/without logging based on config flag
+#  if [ $LOGGING != "enable" ]; then
+    #start without logging
+    nohup $CMDLINE > /dev/null 2>&1 &
+	echo $CMDLINE	
+#  else
+    #start with logging
+#    nohup $CMDLINE > /var/log/plugins/airvideo.out 2>&1 &
+#  fi
+  
+  
+  
+  
  # sleep 0.5  	 	
 
   echo "Starting Openvpn Tunnel: Please Wait..."
   rm -f /tmp/openvpn/openvpn.out.error 
-  nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out /dev/null &
+###################333  nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out 2>&1 &
 #  nohup /tmp/openvpn/openclient.sh > /tmp/openvpn/openvpn.out 2>&1 &
 
   sleep 12
@@ -239,7 +222,6 @@ if [ $alive = "no" ]; then
 
 		if [ "$CONNECTED" != "" ]; then
 		   echo "Connected successfully on"  $dev_tun  
-		   vpn_myip="`/tmp/openvpn/check-my-ip.sh`"
 		   sleep 0.5
 		   echo "Logging in to VPN was successful"		         
 			
@@ -266,7 +248,7 @@ if [ $alive = "no" ]; then
    echo "Server already started"
 fi
 
-### this is do remove defunct process, don't know why it's left, this is a dirty solution, need to find the real cause!!!! 
+### this is do remove defunct process, don't know why it's left, this is a dirty solution, need to find the real cause!!!! #
 	sleep 1
 	ps -ef | grep rc.openvpn | awk '{print $3}' | xargs kill
 	sleep 1
@@ -279,7 +261,7 @@ alive=$(check_alive)
 if [ $alive = "yes" ]; then
 
  echo "Stoping Openvpn Tunnel....."
- sleep 1
+ sleep 0.5
      
 	#	kill -9 $(cat /var/run/openvpn/openvpn.pid )
 		#kill $(cat /var/run/openvpn/openvpn.pid)
@@ -288,7 +270,6 @@ if [ $alive = "yes" ]; then
 		rm -f /var/run/openvpn/openvpn.pid
 		rm -rf /tmp/openvpn/openvpn.out
 		echo "Stopped... OK"
-		sleep 1
 else
     	echo "Client already stoped"
 fi
@@ -296,7 +277,7 @@ fi
 
 openvpn_restart() {
 openvpn_stop;
-sleep 5	
+sleep 2	
 openvpn_start;	
 }
 
@@ -306,10 +287,10 @@ openvpn_status() {
 
 	   for process in `ls /var/run/openvpn/openvpn.pid` ; do
 	      echo ${runningpid:= `cat $process` }
-	   done
+	     done
      else
-      echo ${runningpid:=} 
-         #echo ${runningpid:=No openvpn process is running.} 
+       echo ${runningpid:=} 
+       #echo ${runningpid:=No openvpn process is running.} 
     fi
  }
 
@@ -331,14 +312,6 @@ openvpn_update_ovpn() {
       sleep 0.5
       echo "The ovpn file was updated with -->  status /tmp/openvpn/openvpn-status.log" 
    fi
-   
-#   	if grep -R persist-remote-ip "$OVPNCHOOSE" ;then
-#      		echo "The ovpn file already has the option --> persist-remote-ip"
-#      	else
-#      	  echo -e "\npersist-remote-ip" >> $OVPNCHOOSE
-#   			echo "The ovpn file was updated with --> persist-remote-ip"
-#    	fi
-
 }
 
 openvpn_write_startfile() {
@@ -349,9 +322,9 @@ echo $openvpnpath
 echo "cd $openvpnpath" > /tmp/openvpn/openclient.sh
 
 #     echo "sudo openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" 2>&1 &" >> /tmp/openvpn/openclient.sh
-      echo "openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" 2>&1 &" >> /tmp/openvpn/openclient.sh
+      echo "openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /dev/null 2>&1 &" >> /tmp/openvpn/openclient.sh
       chmod 777 /tmp/openvpn/openclient.sh
-      sleep 1
+      sleep 0.5
 }
 
 	
@@ -381,11 +354,11 @@ extended_device >/dev/null
 	
 	if [ $tmpinterface = "yes" ]; then
 		#/sbin/ifconfig $dev_tun | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
-		curl -s --max-time 10 --silent checkip.dyndns.org | grep -Eo '[0-9\.]+'
+		curl -s --max-time 15 --silent checkip.dyndns.org | grep -Eo '[0-9\.]+'
 
 	else
 		#/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
-		curl -s --max-time 10 --silent checkip.dyndns.org | grep -Eo '[0-9\.]+'
+		curl -s --max-time 15 --silent checkip.dyndns.org | grep -Eo '[0-9\.]+'
 	fi
 }
 
@@ -424,14 +397,14 @@ if [ -e /boot/openvpn/webbadress.txt ];then
 
 #echo "********* Routing IP adresses to VPN tunnels********************"
 	for ((I=0; I < J ; I++))
-	 do
-	  ip route add ${array[I]} via $tunnelip dev $dev_tun
-	   echo ip route add ${array[I]} via $tunnelip dev $dev_tun  >> /tmp/openvpn/openvpn.out
-	   echo ip route add ${array[I]} via $tunnelip dev $dev_tun 
-	 done
+	 	 do
+	  	ip route add ${array[I]} via $tunnelip dev $dev_tun
+	   	echo ip route add ${array[I]} via $tunnelip dev $dev_tun  >> /tmp/openvpn/openvpn.out
+	   	echo ip route add ${array[I]} via $tunnelip dev $dev_tun 
+	 	 done
     else
-	echo "/boot/openvpn/webbadress.txt don't exist" >> /tmp/openvpn/openvpn.out
-	echo "/boot/openvpn/webbadress.txt don't exist"
+			echo "/boot/openvpn/webbadress.txt don't exist" >> /tmp/openvpn/openvpn.out
+			echo "/boot/openvpn/webbadress.txt don't exist"
     fi	
 }
 
@@ -441,7 +414,7 @@ get_all_IP() {
 
 bypasse_IP() {
 
-     if [ -e /boot/openvpn/bypassed.txt ];then
+ if [ -e /boot/openvpn/bypassed.txt ];then
 	k=0
 	echo "starting bypassing IP addresses ............. wait...."
 	echo "starting bypassing IP addresses ............. wait"  >> /tmp/openvpn/openvpn.out
@@ -463,25 +436,25 @@ bypasse_IP() {
   
  #echo "********* Bypass IP adresses from VPN tunnel********************"
 	for ((l=0; l < k ; l++))
-	 do
-	  ip route add ${array[l]} via $localgateway dev eth0
-	   echo ip route add ${array[l]} via $localgateway dev eth0  >> /tmp/openvpn/openvpn.out
-	   echo ip route add ${array[l]} via $localgateway dev eth0 
-	 done
-    else
-	echo "/boot/openvpn/bypassed.txt don't exist" >> /tmp/openvpn/openvpn.out
-	echo "/boot/openvpn/bypassed.txt don't exist"
-    fi	
+	  do
+	   ip route add ${array[l]} via $localgateway dev eth0
+	    echo ip route add ${array[l]} via $localgateway dev eth0  >> /tmp/openvpn/openvpn.out
+	    echo ip route add ${array[l]} via $localgateway dev eth0 
+	  done
+   else
+		echo "/boot/openvpn/bypassed.txt don't exist" >> /tmp/openvpn/openvpn.out
+		echo "/boot/openvpn/bypassed.txt don't exist"
+  fi	
 }
 
 extended_running() {
 
    if grep -q 'PLG_EXT="no"' /boot/config/plugins/openvpn/openvpn.cfg ; then
       ext_running="no"
-        echo $ext_running
+      echo $ext_running
     else
        ext_running="yes"
-        echo  $ext_running
+       echo  $ext_running
    fi
 }
 
@@ -527,9 +500,9 @@ openvpn_getonlineversion() {
 openvpn_getlocalversion() {
 
      # Checking installed OpenVPN version
-     OPEN_VPN_INSTALLED=$(openvpn --version | grep "OpenVPN " | awk 'gsub(/.*i4 | x.*/,"")')
+      OPEN_VPN_INSTALLED=$(openvpn --version | grep "OpenVPN " | awk 'gsub(/.*i4 | x.*/,"")')
      #echo $OPEN_VPN_INSTALLED
-    echo "${OPEN_VPN_INSTALLED: -6}"
+      echo "${OPEN_VPN_INSTALLED: -6}"
 }
 
 check_alive()
@@ -664,7 +637,6 @@ $ext_running="";
 $openvpn_cfg = parse_ini_file("/boot/config/plugins/openvpn/openvpn.cfg");
 $openvpn_running_1 = shell_exec("/etc/rc.d/rc.openvpn check_alive");
 $openvpn_running = trim($openvpn_running_1);
-$oldopenvpn_myip = shell_exec("/tmp/openvpn/check-my-ip.sh");
 $runningpid = shell_exec("/etc/rc.d/rc.openvpn status");
 $extend_vpn_ip = shell_exec("/etc/rc.d/rc.openvpn extended_IP");
 $dev_tun = shell_exec("/etc/rc.d/rc.openvpn extended_device");
@@ -704,10 +676,6 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
  
 <br></br>
   
-  
-        
-  
-  
   <div style="border: 0px solid black;">
    <table>      
       <tr style="font-weight:bold; color:#333333; background:#F0F0F0; text-shadow:0 1px 1px #FFFFFF;">
@@ -730,10 +698,6 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
     </table>
   </div>  
 <br></br>
-
-
-
-     
 
 
 <div style="border: 0px solid black;">
@@ -815,21 +779,23 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
           </tr>
           <tr>
           <td width="30%">
-          <form name="start_openvpn" method="POST" action="/update.htm" target="progressFrame">
+          <form name="start_openvpn1" method="POST" action="/update.htm" target="progressFrame">
           <input type="hidden" name="cmd" value="/etc/rc.d/rc.openvpn start">
           <input type="submit" name="runCmd" value="start">
           </form>
           </td>
           <td> <span class="red-text">Start OpenVPN Client</span></td>
           </tr>
+          
+         
      <?endif;?>
     
     </table>
   </div>
 <br></br>
 
-		<div>   
-		 <tr>	   	
+    <div>   
+     <tr>	   	
      <td><textarea class="tooltip" title="Information from 'ip route show'  is displayed here.." wrap="hard" readonly="yes" style="width: 570px; height: 130px;color: blue;font-size: 8pt"><?php echo $check_netstat; ?></textarea></td>
      <td><textarea class="tooltip" title="Shows IP addresses on all Network Interfaces that are assigned." wrap="hard" readonly="yes" style="width: 155px; height: 130px;color: blue;font-size: 8pt"><?php echo $list_interface; ?></textarea></td>
      </tr>
@@ -1020,6 +986,31 @@ checkRUNNING(document.openvpn_settings);
 ]]>
 </INLINE>
 </FILE>
+
+
+<FILE Name="/usr/local/emhttp/plugins/openvpn/openvpn-ctl.php" Mode="0770">
+<INLINE>
+<![CDATA[
+<?PHP
+ 
+ shell_exec("/etc/rc.d/rc.openvpn start");
+
+?>
+
+checkRUNNING(document.openvpn_settings);
+
+<HTML>
+<HEAD><SCRIPT>var goback=parent.location;</SCRIPT></HEAD>
+<BODY onLoad="parent.location=goback;"</BODY>
+</HTML>
+]]>
+</INLINE>
+</FILE>
+
+
+
+
+
 
 <!-- event handler -->
 
