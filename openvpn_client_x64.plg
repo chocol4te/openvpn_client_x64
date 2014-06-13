@@ -22,7 +22,7 @@ OpenVPN Client version 3 x64
 </FILE>
 
 <FILE Name="/boot/packages/openvpn-2.3.2-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/n/openvpn-2.3.4-x86_64-1.txz</URL>
+<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/n/openvpn-2.3.2-x86_64-1.txz</URL>
 <MD5>efabea515e52b8aed23ee35c41fc52eb</MD5>
 </FILE>
 
