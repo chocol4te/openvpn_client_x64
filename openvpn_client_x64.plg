@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.6">
+<!ENTITY plgver "3.0.7">
 ]>
 
 <PLUGIN>
@@ -22,7 +22,7 @@ OpenVPN Client version 3 x64
 </FILE>
 
 <FILE Name="/boot/packages/openvpn-2.3.2-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/n/openvpn-2.3.2-x86_64-1.txz</URL>
+<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/n/openvpn-2.3.4-x86_64-1.txz</URL>
 <MD5>efabea515e52b8aed23ee35c41fc52eb</MD5>
 </FILE>
 
@@ -183,9 +183,13 @@ cd $openvpnpath
 
 echo $openvpnpath
   
-   CMDLINE="openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /dev/null 2>&1"
+   CMDLINE="openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /dev/null 2>&1"  
+##   CMDLINE="openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config $OVPNCHOOSE > /tmp/openvpn/openvpn.out /dev/null"  
 
-   nohup $CMDLINE > /dev/null 2>&1 &
+
+
+  # nohup $CMDLINE > /dev/null 2>&1 &
+ nohup $CMDLINE > /tmp/openvpn/openvpn.out 2>&1 &
    echo $CMDLINE	
 
   echo "Starting Openvpn Tunnel: Please Wait..."
@@ -613,6 +617,7 @@ Title="OpenVPN Client"
 <![CDATA[
 <?PHP
 $logstring="";
+$statuslogstring="";
 $ext_running="";
 $openvpn_cfg = parse_ini_file("/boot/config/plugins/openvpn/openvpn.cfg");
 $openvpn_running_1 = shell_exec("/etc/rc.d/rc.openvpn check_alive");
@@ -627,10 +632,12 @@ $openvpn_remoteplg = shell_exec("/etc/rc.d/rc.openvpn getver remote");
 $updates_exist = "false";
 $OPEN_VPN_ONLINE_VER = shell_exec("/etc/rc.d/rc.openvpn getonlineversion");
 $OPEN_VPN_INSTALLED = shell_exec("/etc/rc.d/rc.openvpn getlocalversion");
-$list_interface = shell_exec("/etc/rc.d/rc.openvpn get_all_IP");
 $openvpn_myip = shell_exec("/etc/rc.d/rc.openvpn tunnel_IP");
 
 if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
+
+    if (file_exists('/tmp/openvpn/openvpn-status.log')) 
+         {$statuslogstring = file_get_contents('/tmp/openvpn/openvpn-status.log');}
 
     if (file_exists('/tmp/openvpn/openvpn.out')) 
          {$logstring = file_get_contents('/tmp/openvpn/openvpn.out');}
@@ -772,17 +779,14 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
     
     </table>
   </div>
-<br></br>
 
-    <div>   
-     <tr>	   	
-     <td><textarea class="tooltip" title="Information from 'ip route show'  is displayed here.." wrap="hard" readonly="yes" style="width: 570px; height: 130px;color: blue;font-size: 8pt"><?php echo $check_netstat; ?></textarea></td>
-     <td><textarea class="tooltip" title="Shows IP addresses on all Network Interfaces that are assigned." wrap="hard" readonly="yes" style="width: 155px; height: 130px;color: blue;font-size: 8pt"><?php echo $list_interface; ?></textarea></td>
-     </tr>
-     <br></br>
-    </div>     
+<tr>
+	<td><textarea class="tooltip" title="Information about the OpenVPN log is displayed in this area" wrap="hard" readonly="yes" style="width: 600px; height: 250px;color: blue;font-size: 8pt"><?php echo $logstring; ?></textarea></td>
+        </tr>
+	<br></br>
 
-<br></br>
+
+
 </div>
 
 <div style="width: 49%; float:right; border: 0px solid black;">
@@ -929,10 +933,23 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
 
 
 <div>
- 	<tr>
-	<td><textarea class="tooltip" title="Information about the OpenVPN log is displayed in this area" wrap="hard" readonly="yes" style="width: 700px; height: 350px;color: blue;font-size: 8pt"><?php echo $logstring; ?></textarea></td>
-  </tr>
-	<br></br>
+ 	
+<br></br>
+    <div>   
+     <tr>	   	
+     <td><textarea class="tooltip" title="Information from 'ip route show'  is displayed here.." wrap="hard" readonly="yes" style="width: 570px; height: 130px;color: blue;font-size: 8pt"><?php echo $check_netstat; ?></textarea></td>
+     </tr>
+       	<td><textarea class="tooltip" title="Information about the OpenVPN status is displayed in this area" wrap="hard" readonly="yes" style="width: 570px; height: 130px;color: blue;font-size: 8pt"><?php echo $statuslogstring; ?></textarea></td>
+     <br></br>
+    </div>     
+<br></br>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
 </body>
 </form>
 </div>
