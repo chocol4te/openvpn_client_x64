@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.7">
+<!ENTITY plgver "3.0.8">
 ]>
 
 <PLUGIN>
@@ -1071,14 +1071,13 @@ rm -f /tmp/openvpn-install
 <![CDATA[
 
 <?PHP
-parse_str($argv[1], $_GET);
  
-$USER = $_GET['USER'];
-$PASS = $_GET['PASS'];
-$START_ON_MOUNT = $_GET['START_ON_MOUNT'];
-$PLG_EXT = $_GET['PLG_EXT'];
-$PLG_PASSWORD = $_GET['PLG_PASSWORD'];
-$OVPNCHOOSE = $_GET['OVPNCHOOSE'];
+$USER = $_POST['USER'];
+$PASS = $_POST['PASS'];
+$START_ON_MOUNT = $_POST['START_ON_MOUNT'];
+$PLG_EXT = $_POST['PLG_EXT'];
+$PLG_PASSWORD = $_POST['PLG_PASSWORD'];
+$OVPNCHOOSE = $_POST['OVPNCHOOSE'];
 
 $arguments = "";
 $arguments .= "USER_NEW=\"$USER\"\n";
