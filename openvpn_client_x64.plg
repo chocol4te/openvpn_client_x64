@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY plgver "3.0.9">
+<!ENTITY plgver "3.0.10">
 ]>
 
 <PLUGIN>
@@ -11,19 +11,9 @@
 OpenVPN Client version 3 x64
 -->
 
-<FILE Name="/boot/packages/lzo-2.03-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/l/lzo-2.03-x86_64-1.txz</URL>
-<MD5>d55f381c25cda96b274f36cf41be1575</MD5>
-</FILE>
-
-<FILE Name="/boot/packages/iproute2-3.10.0-x86_64-2.txz" Run="upgradepkg --install-new">
-<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-14.1/slackware64/n/iproute2-3.10.0-x86_64-2.txz</URL>
-<MD5>22156ad2743433beb6bc7a7e3dff8124</MD5>
-</FILE>
-
-<FILE Name="/boot/packages/openvpn-2.3.4-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>https://archive.org/download/Puppy_Linux_Fatdog64_700/openvpn-2.3.4-x86_64-1.txz</URL>
-<MD5>42375ef9cfdf19c9c8a43c7b37ed7403</MD5>
+<FILE Name="/boot/packages/openvpn-2.3.2-x86_64-1.txz" Run="upgradepkg --install-new">
+<URL>ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//slackware64-current/slackware64/n/openvpn-2.3.2-x86_64-1.txz</URL>
+<MD5>efabea515e52b8aed23ee35c41fc52eb</MD5>
 </FILE>
 
 <FILE Name="/boot/config/plugins/openvpn/Device_status.png">
