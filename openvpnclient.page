@@ -1,11 +1,11 @@
 Menu="NetworkServices"
 Icon="openvpnclient.png"
+Version="2014.12.02a"
 Author="Peter_sm"
-Version="2014.12.02"
 Type="php"
 Title="OpenVPN Client"
 ---
-<?PHP
+<?php
 $logstring="";
 $statuslogstring="";
 $ext_running="";
@@ -286,5 +286,3 @@ function checkRUNNING(form) {
 }
 
 </script>
-</BODY>
-</HTML>
