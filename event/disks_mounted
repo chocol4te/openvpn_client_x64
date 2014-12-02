@@ -1,0 +1,6 @@
+#!/bin/bash
+source /boot/config/plugins/openvpnclient/openvpnclient.cfg
+
+if [[ $START_ON_MOUNT == "yes" ]]; then
+        /etc/rc.d/rc.openvpnclient start
+fi
