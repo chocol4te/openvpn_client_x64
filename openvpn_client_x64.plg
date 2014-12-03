@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "petersm1">
-<!ENTITY version   "2014.12.02d">
+<!ENTITY version   "2014.12.03">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -50,7 +50,7 @@ tar -zxf &plugin;/&name;-&version;.tar.gz --strip=1 -C &emhttp;/
 find &plugin; -type f -iname "*.tar.gz" ! -iname "&name;-&version;.tar.gz" -delete
 mv -f &emhttp;/rc.&name; /etc/rc.d/rc.&name;
 chmod 0770 /etc/rc.d/rc.&name;
-
+mkdir /tmp/openvpn
 # create openvpn-writable directory for pid file
 if [ ! -e /var/run/openvpn ]; then
   mkdir -p /var/run/openvpn
