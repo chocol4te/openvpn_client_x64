@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "petersm1">
-<!ENTITY version   "2014.12.02c">
+<!ENTITY version   "2014.12.02d">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -74,7 +74,6 @@ rm -f &plugin;/&name;-&version;.tar.gz
 
 rm -r /var/run/openvpn/*
 rm -rf /tmp/openvpn
-rm -rf /usr/local/emhttp/plugins/openvpnclient
 rm -rf /dev/net
 mkdir /dev/net
 mknod /dev/net/tun c 10 200
@@ -83,10 +82,4 @@ mkdir /var/run/&name;/
 </INLINE>
 </FILE>
 
-<FILE Name="/boot/config/plugins/openvpnclient/password.txt" Mode="0770">
-<INLINE>
-<![CDATA[
-]]>
-</INLINE>
-</FILE>
 </PLUGIN>
