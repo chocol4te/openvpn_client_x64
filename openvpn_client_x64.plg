@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "petersm1">
-<!ENTITY version   "2014.12.03">
+<!ENTITY version   "2014.12.07">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -43,6 +43,11 @@ The 'install' script.
 -->
 <FILE Run="/bin/bash">
 <INLINE> 
+mkdir /dev/net
+mknod /dev/net/tun c 10 200
+mkdir /tmp/openvpn
+mkdir /var/run/&name;/
+
 if [ ! -d &emhttp; ]; then
 	mkdir -p &emhttp;
 fi
@@ -75,10 +80,10 @@ rm -f &plugin;/&name;-&version;.tar.gz
 rm -r /var/run/openvpn/*
 rm -rf /tmp/openvpn
 rm -rf /dev/net
-mkdir /dev/net
-mknod /dev/net/tun c 10 200
-mkdir /tmp/openvpn
-mkdir /var/run/&name;/
+#mkdir /dev/net
+#mknod /dev/net/tun c 10 200
+#mkdir /tmp/openvpn
+#mkdir /var/run/&name;/
 </INLINE>
 </FILE>
 

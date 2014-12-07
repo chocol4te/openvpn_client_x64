@@ -6,7 +6,12 @@ Title="Settings"
  <form name="openvpn_settings" method="POST" action="/plugins/openvpnclient/openvpnclient_submit.php" target="progressFrame" onsubmit="validateForm();">
  <table class="tablesorter openvpnclientsettings">
  <thead><th colspan="2"><b>OpenVPN Client Configuration:&nbsp;<img src='/plugins/openvpnclient/images/new_config.png'></b></th><th class="header"></th></thead>
-    <tr>
+<table class="tablesorter">
+
+ <?if ($openvpn_running == "yes"):?>
+    <div><left><b>To change configuration - Press Stop in "Control Action"</b></center></div> <tr>
+  <?endif;?>
+
     <td align="left">
   	  <?if ($openvpn_running != "yes"):?>
         <input type="submit" value="Save Below Configuration">
