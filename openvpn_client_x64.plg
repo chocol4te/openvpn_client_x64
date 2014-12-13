@@ -2,9 +2,10 @@
 
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "openvpnclient">
-<!ENTITY author    "petersm1">
-<!ENTITY version   "2014.12.07a">
-<!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/openvpn_client_x64/master/openvpn_client_x64.plg">
+<!ENTITY author    "peter_sm">
+<!ENTITY plgauthor    "petersm1">
+<!ENTITY version   "2014.12.13">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
 <!ENTITY plugin	 "/boot/config/plugins/&name;">
@@ -13,6 +14,7 @@
 
 <PLUGIN  name="&name;"
          author="&author;"
+         plgauthor="&plgauthor;"
          version="&version;"
          pluginURL="&pluginURL;"
 	 pkgURL="&pkgURL;"
@@ -26,16 +28,16 @@
 
 -->
 
-<FILE Name="&pkgs;openvpn-2.3.2-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>http://slackware.cs.utah.edu/pub/slackware/slackware64-current/slackware64/n/openvpn-2.3.2-x86_64-1.txz</URL>
-<MD5>efabea515e52b8aed23ee35c41fc52eb</MD5>
+<FILE Name="&pkgs;openvpn-2.3.6-x86_64-1.txz" Run="upgradepkg --install-new">
+<URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.3.6-x86_64-1.txz</URL>
+<MD5>6389d4f64e0103b9850f437e60c73166</MD5>
 </FILE>
 
 <!--
 get from github as tarball
 -->
 <FILE Name="&plugin;/&name;-&version;.tar.gz">
-<URL>"https://github.com/&author;/openvpn_client_x64/archive/&version;.tar.gz"</URL>
+<URL>"https://github.com/&plgauthor;/openvpn_client_x64/archive/&version;.tar.gz"</URL>
 </FILE>
 
 <!--
