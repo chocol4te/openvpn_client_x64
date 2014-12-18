@@ -215,7 +215,8 @@ if [ -e /boot/openvpn/webbadress.txt ];then
 	for i in `cat /boot/openvpn/webbadress.txt`
 	   do
 		myip="`ping -c 1 $i | awk 'NR==1{gsub(/\(|\)/,"",$3);print $3}'`"
-		mynewip="${myip%.*}.0/24"			
+#		mynewip="${myip%.*}.0/24"			
+		mynewip="$myip"			
 		echo $myip   "   >>>>>>>   "     $i >> /tmp/openvpn/openvpn.out
 		echo $myip   "   >>>>>>>   "     $i 
 		array=( "${array[@]}" "$mynewip" )
@@ -232,9 +233,10 @@ if [ -e /boot/openvpn/webbadress.txt ];then
 #echo "********* Routing IP adresses to VPN tunnels********************"
 	for ((I=0; I < J ; I++))
 	 	 do
-	  	ip route add ${array[I]} via $tunnelip dev $dev_tun
-	   	echo ip route add ${array[I]} via $tunnelip dev $dev_tun  >> /tmp/openvpn/openvpn.out
-	   	echo ip route add ${array[I]} via $tunnelip dev $dev_tun 
+#	  	ip route add ${array[I]} via $tunnelip dev $dev_tun
+	  	ip route add ${array[I]} dev $dev_tun
+	   	echo ip route add ${array[I]} dev $dev_tun  >> /tmp/openvpn/openvpn.out
+	   	echo ip route add ${array[I]} dev $dev_tun 
 	 	 done
     else
 			echo "/boot/openvpn/webbadress.txt don't exist" >> /tmp/openvpn/openvpn.out
@@ -255,7 +257,8 @@ bypasse_IP() {
 	for j in `cat /boot/openvpn/bypassed.txt`
 	  do
 		myip="`ping -c 1 $j | awk 'NR==1{gsub(/\(|\)/,"",$3);print $3}'`"
-		mynewip="${myip%.*}.0/24"			
+#		mynewip="${myip%.*}.0/24"			
+		mynewip="$myip"			
 		echo $myip   "   >>>>>>>   "     $j >> /tmp/openvpn/openvpn.out
 		echo $myip   "   >>>>>>>   "     $j 
 		array=( "${array[@]}" "$mynewip" )
