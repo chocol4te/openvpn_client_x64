@@ -1,6 +1,6 @@
 #!/bin/bash
 source /boot/config/plugins/openvpnclient/openvpnclient.cfg
-if [[ "$INSTALL_ON_BOOT" = "enable" ]]; then	
-	logger "Starting OpenVPN Client"
-	/etc/rc.d/rc.openvpnclient start | logger
+if [[ "$START_ON_MOUNT" = "yes" ]]; then
+        logger "Starting OpenVPN Client"
+        /etc/rc.d/rc.openvpnclient start | logger
 fi

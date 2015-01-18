@@ -1,5 +1,4 @@
 #!/bin/bash
-if [[ "$DISCONNECT_ON_UMOUNT" == "yes" ]]; then
-     logger "Stopping OpenVPN Client"
+	logger "Stopping OpenVPN Client"
 	/etc/rc.d/rc.openvpnclient stop | logger
-fi
+	
