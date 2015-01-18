@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2014.12.18">
+<!ENTITY version   "2015.01.18">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -45,10 +45,10 @@ The 'install' script.
 -->
 <FILE Run="/bin/bash">
 <INLINE> 
-mkdir /dev/net
+mkdir -p /dev/net
 mknod /dev/net/tun c 10 200
-mkdir /tmp/openvpn
-mkdir /var/run/&name;/
+mkdir -p /tmp/openvpn
+mkdir -p /var/run/&name;/
 
 if [ ! -d &emhttp; ]; then
 	mkdir -p &emhttp;
@@ -57,7 +57,8 @@ tar -zxf &plugin;/&name;-&version;.tar.gz --strip=1 -C &emhttp;/
 find &plugin; -type f -iname "*.tar.gz" ! -iname "&name;-&version;.tar.gz" -delete
 mv -f &emhttp;/rc.&name; /etc/rc.d/rc.&name;
 chmod 0770 /etc/rc.d/rc.&name;
-mkdir /tmp/openvpn
+chmod 0770 &emhttp;/event/*
+mkdir -p /tmp/openvpn
 # create openvpn-writable directory for pid file
 if [ ! -e /var/run/openvpn ]; then
   mkdir -p /var/run/openvpn
@@ -82,10 +83,6 @@ rm -f &plugin;/&name;-&version;.tar.gz
 rm -r /var/run/openvpn/*
 rm -rf /tmp/openvpn
 rm -rf /dev/net
-#mkdir /dev/net
-#mknod /dev/net/tun c 10 200
-#mkdir /tmp/openvpn
-#mkdir /var/run/&name;/
 </INLINE>
 </FILE>
 
