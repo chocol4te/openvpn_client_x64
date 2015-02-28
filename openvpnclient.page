@@ -1,6 +1,6 @@
 Menu="NetworkServices"
 Icon="openvpnclient.png"
-Version="2015.01.18a"
+Version="2015.02.28"
 Author="Peter_sm"
 Type="xmenu"
 Title="OpenVPN Client"

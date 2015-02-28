@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2015.01.18a">
+<!ENTITY version   "2015.02.28">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -21,7 +21,14 @@
 	 pkgs="&pkgs;"
 	 plugin="&plugin;"
 	 emhttp="&emhttp;">
->
+
+<CHANGES>
+###2015.02.28
+-Added Release notes
+###2015.01.18a
+-Previous Releas
+</CHANGES>
+
 
 <!--
 2013-10-19 - first release
