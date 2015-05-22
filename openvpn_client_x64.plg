@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2015.03.05">
+<!ENTITY version   "2015.05.22">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -23,6 +23,8 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
+###2015.05.22
+-Fixed logic when setting up mknod.
 ###2015.03.05
 -Added command 'modprobe tun' to solve issues some users have.
 ###2015.02.28
@@ -55,7 +57,9 @@ The 'install' script.
 <FILE Run="/bin/bash">
 <INLINE> 
 mkdir -p /dev/net
-mknod /dev/net/tun c 10 200
+if[ ! -c /dev/net/tun ]; then
+	mknod /dev/net/tun c 10 200
+fi
 modprobe tun
 mkdir -p /tmp/openvpn
 mkdir -p /var/run/&name;/
