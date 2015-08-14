@@ -1,4 +1,3 @@
 #!/bin/bash
 	logger "Stopping OpenVPN Client"
-	/etc/rc.d/rc.openvpnclient stop | logger
-	
+	/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient stop | logger

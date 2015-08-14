@@ -2,5 +2,5 @@
 source /boot/config/plugins/openvpnclient/openvpnclient.cfg
 if [[ "$START_ON_MOUNT" = "yes" ]]; then
         logger "Starting OpenVPN Client"
-        /etc/rc.d/rc.openvpnclient start | logger
+        /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient start | logger
 fi

@@ -19,7 +19,7 @@ echo "Please wait while updating configuration...";
 
 $file = "/usr/local/emhttp/plugins/openvpnclient/openvpn.args";
 file_put_contents($file, $arguments);
-shell_exec("/etc/rc.d/rc.openvpnclient updatecfg");
+shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient updatecfg");
 ?>
 
 <HTML>

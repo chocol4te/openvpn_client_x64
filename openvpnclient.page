@@ -1,6 +1,6 @@
 Menu="NetworkServices"
 Icon="openvpnclient.png"
-Version="2015.05.22"
+Version="2015.08.14"
 Author="Peter_sm"
 Type="xmenu"
 Title="OpenVPN Client"
@@ -12,15 +12,15 @@ $logstring="";
 $statuslogstring="";
 $ext_running="";
 $openvpn_cfg = parse_ini_file("/boot/config/plugins/openvpnclient/openvpnclient.cfg");
-$openvpn_running_1 = shell_exec("/etc/rc.d/rc.openvpnclient check_alive");
+$openvpn_running_1 = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient check_alive");
 $openvpn_running = trim($openvpn_running_1);
-$runningpid = shell_exec("/etc/rc.d/rc.openvpnclient status");
-$extend_vpn_ip = shell_exec("/etc/rc.d/rc.openvpnclient extended_IP");
-$dev_tun = shell_exec("/etc/rc.d/rc.openvpnclient extended_device");
+$runningpid = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient status");
+$extend_vpn_ip = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient extended_IP");
+$dev_tun = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient extended_device");
 $check_netstat = shell_exec("ip route show");
-$OPEN_VPN_ONLINE_VER = shell_exec("/etc/rc.d/rc.openvpnclient getonlineversion");
-$OPEN_VPN_INSTALLED = shell_exec("/etc/rc.d/rc.openvpnclient getlocalversion");
-$openvpn_myip = shell_exec("/etc/rc.d/rc.openvpnclient tunnel_IP");
+$OPEN_VPN_ONLINE_VER = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient getonlineversion");
+$OPEN_VPN_INSTALLED = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient getlocalversion");
+$openvpn_myip = shell_exec("/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient tunnel_IP");
 
 if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
 
@@ -116,7 +116,7 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
         <tr>
         <td width="30%">
         <form name="stop_openvpn" method="POST" action="/update.htm" target="progressFrame">
-        <input type="hidden" name="cmd" value="/etc/rc.d/rc.openvpnclient stop">
+        <input type="hidden" name="cmd" value="/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient stop">
         <input type="submit" name="runCmd" value="Stop">
         </form>
         </td>
@@ -128,7 +128,7 @@ if ($openvpn_cfg['PLG_EXT'] != "no") { $ext_running = "yes"; }
           <tr>
           <td width="30%">
           <form name="start_openvpn1" method="POST" action="/update.htm" target="progressFrame">
-          <input type="hidden" name="cmd" value="/etc/rc.d/rc.openvpnclient start">
+          <input type="hidden" name="cmd" value="/usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient start">
           <input type="submit" name="runCmd" value="start">
           </form>
           </td>
