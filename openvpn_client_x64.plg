@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2015.08.14">
+<!ENTITY version   "2015.09.01">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "ftp://ftp.sunet.se/pub/os/Linux/distributions/slackware//">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -23,6 +23,10 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
+###2015.09.01
+-Updated support for version 6.1
+###2015.08.20
+-Updated security policy for unRAID v6.1
 ###2015.08.14
 -Added support for version 6.1
 ###2015.07.25
@@ -74,8 +78,6 @@ if [ ! -d &emhttp; ]; then
 fi
 tar -zxf &plugin;/&name;-&version;.tar.gz --strip=1 -C &emhttp;/
 find &plugin; -type f -iname "*.tar.gz" ! -iname "&name;-&version;.tar.gz" -delete
-#mv -f &emhttp;/rc.&name; /etc/rc.d/rc.&name;
-#chmod 0770 /etc/rc.d/rc.&name;
 chmod 0770 &emhttp;/event/*
 chmod 0770 &emhttp;/scripts/*
 mkdir -p /tmp/openvpn
@@ -97,7 +99,6 @@ The 'remove' script.
 <INLINE>
 &emhttp;/scripts/rc.&name; stop
 rm -rf &emhttp;
-#rm -f /etc/rc.d/rc.&name;
 rm -f &plugin;/&name;-&version;.tar.gz
 
 rm -r /var/run/openvpn/*
