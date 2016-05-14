@@ -5,7 +5,7 @@
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
 <<<<<<< HEAD
-<!ENTITY version   "2016.05.14b">
+<!ENTITY version   "2016.05.14c">
 =======
 <!ENTITY version   "2015.12.23">
 >>>>>>> origin/master
@@ -55,15 +55,13 @@
 
 -->
 
-<<<<<<< HEAD
 <FILE Name="&pkgs;openvpn-2.3.11-x86_64-1.txz" Run="upgradepkg --install-new">
 <URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.3.11-x86_64-1.txz</URL>
 <MD5>db60c2aec2f20db2cd3ac2c132e8969c</MD5>
 =======
-<FILE Name="&pkgs;openvpn-2.3.9-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.3.9-x86_64-1.txz</URL>
-<MD5>895a8991c197c71514ea16eba94403ca</MD5>
->>>>>>> origin/master
+<FILE Name="&pkgs;openvpn-2.3.11-x86_64-1.txz" Run="upgradepkg --install-new">
+<URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.3.11-x86_64-1.txz</URL>
+<MD5>db60c2aec2f20db2cd3ac2c132e8969c</MD5>
 </FILE>
 <!--
 get from github as tarball
