@@ -5,7 +5,7 @@
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
 <<<<<<< HEAD
-<!ENTITY version   "2016.05.14">
+<!ENTITY version   "2016.05.14b">
 =======
 <!ENTITY version   "2015.12.23">
 >>>>>>> origin/master
@@ -27,7 +27,7 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
-###2016.05.14
+###2016.05.14b
 -Update of OpenVPN packages to 2.3.11
 ###2015.09.01
 -Updated OpenVPN to 2.3.9
