@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2016.05.14f">
+<!ENTITY version   "2016.12.31">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "http://mirrors.slackware.com/slackware/">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -23,6 +23,8 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
+###2016.12.31
+-Update of OpenVPN packages to 2.4
 ###2016.05.14d
 -Update of OpenVPN packages to 2.3.11
 ###2015.09.01
@@ -51,14 +53,9 @@
 
 -->
 
-<FILE Name="&pkgs;openvpn-2.3.11-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.3.11-x86_64-1.txz</URL>
-<MD5>db60c2aec2f20db2cd3ac2c132e8969c</MD5>
-</FILE>
-
-<FILE Name="&pkgs;openvpn-2.3.11-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.3.11-x86_64-1.txz</URL>
-<MD5>db60c2aec2f20db2cd3ac2c132e8969c</MD5>
+<FILE Name="&pkgs;openvpn-2.4.0-x86_64-1.txz" Run="upgradepkg --install-new">
+<URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.4.0-x86_64-1.txz</URL>
+<MD5>a61faf1673f506b0f440716686085556</MD5>
 </FILE>
 
 <!--
