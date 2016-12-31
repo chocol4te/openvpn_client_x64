@@ -65,7 +65,7 @@ openvpnpath=${OVPNCHOOSE%/*}
 cd $openvpnpath
 
 echo $openvpnpath
-echo "sudo -H -u root openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" /dev/null &" > /tmp/openvpn/openvpn.sh
+echo "sudo -H -u root openvpn --writepid /var/run/openvpn/openvpn.pid --script-security 3 --mute-replay-warnings --config \"$OVPNCHOOSE\" &" > /tmp/openvpn/openvpn.sh
         chmod 777 /tmp/openvpn/openvpn.sh
         sleep 0.5
         #nohup /tmp/openvpn/openvpn.sh >  /tmp/openvpn/openvpn.out /dev/null &
