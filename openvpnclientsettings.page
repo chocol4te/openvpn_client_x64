@@ -79,8 +79,18 @@ Title="Settings"
 		<?=mk_option($openvpn_cfg['START_ON_MOUNT'], "yes", "Yes");?>
 		</select>
 		</td>         
+		</tr>
+		          
 		<tr>
-		                
+		<td align="left">Disconnect OpenVPN during stopping the array:</td>
+		<td align="left">
+		<select name="DISCONNECT_ON_UMOUNT" id="DISCONNECT_ON_UMOUNT" size="1">
+		<?=mk_option($openvpn_cfg['DISCONNECT_ON_UMOUNT'], "no", "No");?>
+		<?=mk_option($openvpn_cfg['DISCONNECT_ON_UMOUNT'], "yes", "Yes");?>
+		</select>
+		</td>         
+		</tr>
+		
 		<tr>
 		<td align="left">Extended Routing:</td>
 		<td align="left">

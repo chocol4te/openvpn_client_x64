@@ -6,6 +6,7 @@ $START_ON_MOUNT = $_POST['START_ON_MOUNT'];
 $PLG_EXT = $_POST['PLG_EXT'];
 $PLG_PASSWORD = $_POST['PLG_PASSWORD'];
 $OVPNCHOOSE = $_POST['OVPNCHOOSE'];
+$DISCONNECT_ON_UMOUNT = $_POST['DISCONNECT_ON_UMOUNT'];
 
 $arguments = "";
 $arguments .= "USER_NEW=\"$USER\"\n";
@@ -14,6 +15,7 @@ $arguments .= "START_ON_MOUNT_NEW=\"$START_ON_MOUNT\"\n";
 $arguments .= "PLG_EXT_NEW=\"$PLG_EXT\"\n";
 $arguments .= "PLG_PASSWORD_NEW=\"$PLG_PASSWORD\"\n";
 $arguments .= "OVPNCHOOSE_NEW=\"$OVPNCHOOSE\"\n";
+$arguments .= "DISCONNECT_ON_UMOUNT_NEW=\"$DISCONNECT_ON_UMOUNT\"\n";
 
 echo "Please wait while updating configuration...";
 

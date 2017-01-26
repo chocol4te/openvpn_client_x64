@@ -13,6 +13,7 @@ START_ON_MOUNT=$START_ON_MOUNT_NEW
 PLG_EXT=$PLG_EXT_NEW
 PLG_PASSWORD=$PLG_PASSWORD_NEW
 OVPNCHOOSE=$OVPNCHOOSE_NEW
+DISCONNECT_ON_UMOUNT=$DISCONNECT_ON_UMOUNT_NEW
 
   write_cfg
   
@@ -30,6 +31,7 @@ write_cfg()
   echo "PLG_EXT=\"$PLG_EXT\"" >> /boot/config/plugins/openvpnclient/openvpnclient.cfg
   echo "PLG_PASSWORD=\"$PLG_PASSWORD\"" >> /boot/config/plugins/openvpnclient/openvpnclient.cfg
   echo "OVPNCHOOSE=\"$OVPNCHOOSE\"" >> /boot/config/plugins/openvpnclient/openvpnclient.cfg
+  echo "DISCONNECT_ON_UMOUNT=\"$DISCONNECT_ON_UMOUNT\"" >> /boot/config/plugins/openvpnclient/openvpnclient.cfg
   
   echo $USER > /boot/config/plugins/openvpnclient/password.txt
   echo $PASS >> /boot/config/plugins/openvpnclient/password.txt
