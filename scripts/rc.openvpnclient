@@ -51,16 +51,16 @@ if [ $alive = "no" ]; then
 
   sleep 0.5
 #  update_ovpn_interface
-
-	if [[ $PLG_PASSWORD = "yes" ]]; then
+	  
+		if [[ $PLG_PASSWORD = "yes" ]]; then
 	  	echo "Updating the ovpn file..."
 	  	openvpnclient_update_ovpn
-	else
+	  else
 	  	echo "No change was done to the ovpn file"	
-	fi
-
+	  fi
+  
   sleep 0.5
-
+ 
 echo "Changing to the folder where the openvpn config files belong"
 openvpnpath=${OVPNCHOOSE%/*}
 
@@ -79,36 +79,37 @@ echo "sudo -H -u root openvpn --writepid /var/run/openvpn/openvpn.pid --script-s
   rm -f /tmp/openvpn/openvpn.out.error 
   sleep 12
 
+           
+   # test if we have a connection
+  dev_tun=$(extended_device)
 
-# test if we have a connection
-dev_tun=$(extended_device)
-CONNECTED="`ifconfig -a | grep -A 6 $dev_tun`"
+	CONNECTED="`ifconfig -a | grep -A 6 $dev_tun`"
 
-if [ "$CONNECTED" != "" ]; then
-		   echo "Connected successfully on"  $dev_tun
+		if [ "$CONNECTED" != "" ]; then
+		   echo "Connected successfully on"  $dev_tun  
 		   sleep 0.5
-		   echo "Logging in to VPN was successful"
-
+		   echo "Logging in to VPN was successful"		         
+			
 		if [ $PLG_EXT == "Bypass" ]; then
 			echo "Starting bypass IP addresses..."
 			bypasse_IP
 	        fi
-
+		 
 		if [ $PLG_EXT == "Specific" ]; then
 			echo "Starting extended routing..."
 			extended_route
 		fi
-        sleep 2
-        echo "OK... Started"
-else
-		echo "Not connected! " $dev_tun " not established!!!"
-		sleep 0.5
-		rm -f /var/run/openvpn/openvpn.pid
-		cp /tmp/openvpn/openvpn.out /tmp/openvpn/openvpn.out.error
-fi
-
+		else
+			echo "Not connected! " $dev_tun " not established!!!"
+		   	sleep 0.5
+		   	rm -f /var/run/openvpn/openvpn.pid
+		 	cp /tmp/openvpn/openvpn.out /tmp/openvpn/openvpn.out.error 
+		 fi
+		
+	sleep 2
+	echo "OK... Started" 
   else
-   	echo "Client already started"
+   echo "Client already started"
 fi
 }
 
