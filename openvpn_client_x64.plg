@@ -23,8 +23,11 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
+<<<<<<< HEAD
 ###2017.01.26
 - Added new settings to keep VPN active during stopping array
+=======
+>>>>>>> origin/master
 ###2017.01.15a
 - Add symlink to /etc/rc.d/rc.openvpnclient
 ###2017.01.15
