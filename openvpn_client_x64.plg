@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2017.01.26">
+<!ENTITY version   "2017.01.26a">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "http://mirrors.slackware.com/slackware/">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -103,7 +103,7 @@ if [ ! -e /var/run/openvpn ]; then
 fi
 
 cp -nr &emhttp;/&name; /boot/config/plugins
-ln -s /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient /etc/rc.d/
+ln -sf /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient /etc/rc.d/
 </INLINE>
 </FILE>
 
