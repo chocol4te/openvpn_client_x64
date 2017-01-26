@@ -23,6 +23,8 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
+###2017.01.26a
+- Updated symlink for rc.openvpnclient
 ###2017.01.26
 - Added new settings to keep VPN active during stopping array
 ###2017.01.15a
