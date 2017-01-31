@@ -106,7 +106,7 @@ if [ ! -e /var/run/openvpn ]; then
 fi
 
 cp -nr &emhttp;/&name; /boot/config/plugins
-ln -s /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient /etc/rc.d/
+ln -sf /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient /etc/rc.d/
 </INLINE>
 </FILE>
 
