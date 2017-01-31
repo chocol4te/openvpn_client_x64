@@ -23,7 +23,7 @@ Title="Settings"
     <tr>
     <td align="left">Use password to login ?</td>
 	  <td align="left">
-	  <select name="PLG_PASSWORD" id="PLG_PASSWORD" class="tooltip" title="Enter No if the server you are connecting to does not require a username and password, if this is set to Yes, your OVPN file will be updated with your login credentials." size="1"> 
+	  <select name="PLG_PASSWORD" id="PLG_PASSWORD" class="tooltip" title="Enter No if the server you are connecting to does not require a username and password, if this is set to Yes, your OVPN file will be updated with your login credentials." size="1" onchange="disable(this.value);"> 
 	  <?=mk_option($openvpn_cfg['PLG_PASSWORD']  , "no", "No");?>
 		<?=mk_option($openvpn_cfg['PLG_PASSWORD']  , "yes", "Yes");?>
 		</select>				
@@ -105,3 +105,26 @@ Title="Settings"
  </table>
  </form>
 </div>
+
+<script type="text/javascript">
+
+
+window.onload = function(){
+ disable(openvpn_settings);
+}
+
+function disable(what)
+{ 
+ if (document.openvpn_settings.PLG_PASSWORD.value=="yes") 
+	{
+	document.openvpn_settings.USER.disabled=false; 
+	document.openvpn_settings.PASS.disabled=false; 
+	}
+else 
+	{
+	document.openvpn_settings.USER.disabled=true; 
+	document.openvpn_settings.PASS.disabled=true; 
+	}
+}
+</script>
+

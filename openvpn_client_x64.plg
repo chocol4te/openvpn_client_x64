@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2017.01.26a">
+<!ENTITY version   "2017.01.31">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "http://mirrors.slackware.com/slackware/">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -23,8 +23,9 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
-###2017.01.26a
-- Updated symlink for rc.openvpnclient
+###2017.01.31
+- Minor changes
+###2017.01.15a
 ###2017.01.26
 - Added new settings to keep VPN active during stopping array
 ###2017.01.15a
@@ -105,7 +106,7 @@ if [ ! -e /var/run/openvpn ]; then
 fi
 
 cp -nr &emhttp;/&name; /boot/config/plugins
-ln -sf /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient /etc/rc.d/
+ln -s /usr/local/emhttp/plugins/openvpnclient/scripts/rc.openvpnclient /etc/rc.d/
 </INLINE>
 </FILE>
 
@@ -117,11 +118,7 @@ The 'remove' script.
 &emhttp;/scripts/rc.&name; stop
 rm -rf &emhttp;
 rm -f &plugin;/&name;-&version;.tar.gz
-# Cleanup previous plugin installation
-rm -rf /var/local/emhttp/plugins/&name;
-rm -rf /var/run/&name;
-rm -rf /var/log/&name;.log
-rm -rf /var/log/plugins/&name;
+
 rm -r /var/run/openvpn/*
 rm -rf /tmp/openvpn
 rm -rf /dev/net

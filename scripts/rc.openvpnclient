@@ -88,26 +88,25 @@ echo "sudo -H -u root openvpn --writepid /var/run/openvpn/openvpn.pid --script-s
 		if [ "$CONNECTED" != "" ]; then
 		   echo "Connected successfully on"  $dev_tun  
 		   sleep 0.5
-		   echo "Logging in to VPN was successful"		         
-			
+		   echo "Logging in to VPN was successfull"
+
 		if [ $PLG_EXT == "Bypass" ]; then
 			echo "Starting bypass IP addresses..."
 			bypasse_IP
 	        fi
-		 
+
 		if [ $PLG_EXT == "Specific" ]; then
 			echo "Starting extended routing..."
 			extended_route
 		fi
+			echo "OK... Started"
 		else
 			echo "Not connected! " $dev_tun " not established!!!"
 		   	sleep 0.5
 		   	rm -f /var/run/openvpn/openvpn.pid
 		 	cp /tmp/openvpn/openvpn.out /tmp/openvpn/openvpn.out.error 
 		 fi
-		
 	sleep 2
-	echo "OK... Started" 
   else
    echo "Client already started"
 fi
