@@ -23,9 +23,10 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
+##2017.01.31a
+- Fixed clean up functio
 ###2017.01.31
 - Minor changes
-###2017.01.15a
 ###2017.01.26
 - Added new settings to keep VPN active during stopping array
 ###2017.01.15a
@@ -118,7 +119,11 @@ The 'remove' script.
 &emhttp;/scripts/rc.&name; stop
 rm -rf &emhttp;
 rm -f &plugin;/&name;-&version;.tar.gz
-
+# Cleanup previous plugin installation
+rm -rf /var/local/emhttp/plugins/&name;
+rm -rf /var/run/&name;
+rm -rf /var/log/&name;.log
+rm -rf /var/log/plugins/&name;
 rm -r /var/run/openvpn/*
 rm -rf /tmp/openvpn
 rm -rf /dev/net
