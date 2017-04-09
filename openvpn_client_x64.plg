@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2017.04.09a">
+<!ENTITY version   "2017.04.09b">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "http://mirrors.slackware.com/slackware/">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -23,7 +23,7 @@
 	 emhttp="&emhttp;">
 
 <CHANGES>
-###2017.04.09
+###2017.04.09b
 -Update of OpenVPN packages to 2.4.1
 ##2017.01.31b
 - Fixed clean up function
