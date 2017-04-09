@@ -4,7 +4,7 @@
 <!ENTITY name      "openvpnclient">
 <!ENTITY author    "peter_sm">
 <!ENTITY plgauthor    "petersm1">
-<!ENTITY version   "2017.04.09">
+<!ENTITY version   "2017.04.09a">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&plgauthor;/openvpn_client_x64/master/openvpn_client_x64.plg">
 <!ENTITY pkgURL	 "http://mirrors.slackware.com/slackware/">
 <!ENTITY pkgs 	    "/boot/packages/">
@@ -67,7 +67,7 @@
 
 -->
 
-<FILE Name="&pkgs;openvpn-2.4.0-x86_64-1.txz" Run="upgradepkg --install-new">
+<FILE Name="&pkgs;openvpn-2.4.1-x86_64-1.txz" Run="upgradepkg --install-new">
 <URL>&pkgURL;slackware64-current/slackware64/n/openvpn-2.4.1-x86_64-1.txz</URL>
 <MD5>972471aca03ba0d42635fca1946d7cbf</MD5>
 </FILE>
